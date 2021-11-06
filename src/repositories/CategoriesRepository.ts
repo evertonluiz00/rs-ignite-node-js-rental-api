@@ -12,20 +12,22 @@ class CategoriesRepository {
         this.categories = [];
     }
 
-    create({ name, description }: ICreateCategoryDto): void {
+    create({ name, description }: ICreateCategoryDto): Category {
         const category = new Category(name, description);
 
         this.categories.push(category);
+
+        return category;
     }
 
-    list(): Category[] {
+    listAll(): Category[] {
         return this.categories;
     }
 
-    findByName(name: string): Category | undefined {
+    findByName(name: string): Category | null {
         const category = this.categories.find((category) => category.name === name);
 
-        return category;
+        return category || null;
     }
 }
 
