@@ -1,8 +1,7 @@
 import { Category } from "../models/Category";
-import { CategoriesRepository } from "../repositories/CategoriesRepository";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 
-interface IRequest {
+interface RequestDTO {
     name: string;
     description: string;
 }
@@ -15,14 +14,17 @@ class CreateCategoryService {
         this.categoriesRepository = categoriesRepository;
     }
 
-    execute({ name, description }: IRequest): Category {
+
+    public execute({ name, description }: RequestDTO): Category {
+
         const categoryAlreadyExists = this.categoriesRepository.findByName(name);
 
         if (categoryAlreadyExists) {
             throw new Error("Category already exists!");
         }
 
-        return this.categoriesRepository.create({ name, description });
+        const category = this.categoriesRepository.create({ name, description });
+        return category;
     }
 }
 
