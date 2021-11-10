@@ -1,5 +1,5 @@
 import { Category } from "../models/Category";
-import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
+import { ICategoriesRepository } from "../interfaces/ICategoriesRepository";
 
 interface RequestDTO {
     name: string;
