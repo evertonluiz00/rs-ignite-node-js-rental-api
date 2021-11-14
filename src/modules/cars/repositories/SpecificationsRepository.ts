@@ -4,22 +4,30 @@ import { ISpecificationsRepository, ICreateSpecificationDTO } from '../interface
 class SpecificationsRepository implements ISpecificationsRepository {
 
     private specifications: Specification[] = [];
+    private static INSTANCE: SpecificationsRepository;
 
-    constructor() {
+    private constructor() {
         this.specifications = [];
     }
 
-    create({ name, description }: ICreateSpecificationDTO): Specification {
+    public static getInstance(): SpecificationsRepository {
+        if (!SpecificationsRepository.INSTANCE) {
+            SpecificationsRepository.INSTANCE = new SpecificationsRepository();
+        }
+        return SpecificationsRepository.INSTANCE;
+    }
+
+    public create({ name, description }: ICreateSpecificationDTO): Specification {
         const specification = new Specification(name, description);
         this.specifications.push(specification);
         return specification;
     }
 
-    listAll(): Specification[] {
+    public listAll(): Specification[] {
         return this.specifications;
     }
 
-    findByName(name: string): Specification | null {
+    public findByName(name: string): Specification | null {
         const specification = this.specifications.find((spec) => spec.name === name);
         return specification || null;
     }

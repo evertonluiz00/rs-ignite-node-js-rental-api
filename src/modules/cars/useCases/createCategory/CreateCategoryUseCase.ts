@@ -1,19 +1,18 @@
-import { Category } from "../models/Category";
-import { ICategoriesRepository } from "../interfaces/ICategoriesRepository";
+import { Category } from "../../models/Category";
+import { ICategoriesRepository } from "../../interfaces/ICategoriesRepository";
 
 interface RequestDTO {
     name: string;
     description: string;
 }
 
-class CreateCategoryService {
+class CreateCategoryUseCase {
 
     private categoriesRepository: ICategoriesRepository;
 
     constructor(categoriesRepository: ICategoriesRepository) {
         this.categoriesRepository = categoriesRepository;
     }
-
 
     public execute({ name, description }: RequestDTO): Category {
 
@@ -28,4 +27,4 @@ class CreateCategoryService {
     }
 }
 
-export { CreateCategoryService };
+export { CreateCategoryUseCase };

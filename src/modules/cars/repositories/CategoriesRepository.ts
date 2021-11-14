@@ -4,22 +4,30 @@ import { ICategoriesRepository, ICreateCategoryDTO } from '../interfaces/ICatego
 class CategoriesRepository implements ICategoriesRepository {
 
     private categories: Category[] = [];
+    private static INSTANCE: CategoriesRepository;
 
-    constructor() {
+    private constructor() {
         this.categories = [];
     }
 
-    create({ name, description }: ICreateCategoryDTO): Category {
+    public static getInstance(): CategoriesRepository {
+        if (!CategoriesRepository.INSTANCE) {
+            CategoriesRepository.INSTANCE = new CategoriesRepository();
+        }
+        return CategoriesRepository.INSTANCE;
+    }
+
+    public create({ name, description }: ICreateCategoryDTO): Category {
         const category = new Category(name, description);
         this.categories.push(category);
         return category;
     }
 
-    listAll(): Category[] {
+    public listAll(): Category[] {
         return this.categories;
     }
 
-    findByName(name: string): Category | null {
+    public findByName(name: string): Category | null {
         const category = this.categories.find((category) => category.name === name);
         return category || null;
     }
