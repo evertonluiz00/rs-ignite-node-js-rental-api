@@ -14,15 +14,15 @@ class CreateCategoryUseCase {
         this.categoriesRepository = categoriesRepository;
     }
 
-    public execute({ name, description }: RequestDTO): Category {
+    public async execute({ name, description }: RequestDTO): Promise<Category> {
 
-        const categoryAlreadyExists = this.categoriesRepository.findByName(name);
+        const categoryAlreadyExists = await this.categoriesRepository.findByName(name);
 
         if (categoryAlreadyExists) {
             throw new Error("Category already exists!");
         }
 
-        const category = this.categoriesRepository.create({ name, description });
+        const category = await this.categoriesRepository.create({ name, description });
         return category;
     }
 }
