@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe'
 import { Specification } from "../../models/Specification";
 import { ISpecificationsRepository } from "../../interfaces/ISpecificationsRepository";
 
@@ -6,11 +7,12 @@ interface RequestDTO {
     description: string;
 }
 
+@injectable()
 class CreateSpecificationUseCase {
 
     private specificationsRepository: ISpecificationsRepository;
 
-    constructor(specificationsRepository: ISpecificationsRepository) {
+    constructor(@inject("SpecificationsRepository") specificationsRepository: ISpecificationsRepository) {
         this.specificationsRepository = specificationsRepository;
     }
 

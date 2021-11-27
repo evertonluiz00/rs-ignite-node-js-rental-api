@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe'
 import { Category } from "../../models/Category";
 import { ICategoriesRepository } from "../../interfaces/ICategoriesRepository";
 
@@ -6,11 +7,12 @@ interface RequestDTO {
     description: string;
 }
 
+@injectable()
 class CreateCategoryUseCase {
 
     private categoriesRepository: ICategoriesRepository;
 
-    constructor(categoriesRepository: ICategoriesRepository) {
+    constructor(@inject("CategoriesRepository") categoriesRepository: ICategoriesRepository) {
         this.categoriesRepository = categoriesRepository;
     }
 
