@@ -16,9 +16,9 @@ class CreateSpecificationUseCase {
         this.specificationsRepository = specificationsRepository;
     }
 
-    public execute({ name, description }: RequestDTO): Specification {
+    public async execute({ name, description }: RequestDTO): Promise<Specification> {
 
-        const specificationAlreadyExists = this.specificationsRepository.findByName(name);
+        const specificationAlreadyExists = await this.specificationsRepository.findByName(name);
 
         if (specificationAlreadyExists) {
             throw new Error("Specification already exists!");
