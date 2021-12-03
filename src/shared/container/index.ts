@@ -4,6 +4,9 @@ import { ICategoriesRepository } from '../../modules/cars/interfaces/ICategories
 import { CategoriesRepository } from '../../modules/cars/repositories/CategoriesRepository';
 import { ISpecificationsRepository } from '../../modules/cars/interfaces/ISpecificationsRepository';
 import { SpecificationsRepository } from '../../modules/cars/repositories/SpecificationsRepository';
+import { IUsersRepository } from '../../modules/accounts/interfaces/IUsersRepository';
+import { UsersReposotory } from '../../modules/accounts/repositories/UsersRepository';
+
 
 container.registerSingleton<ICategoriesRepository>(
     "CategoriesRepository",
@@ -13,5 +16,10 @@ container.registerSingleton<ICategoriesRepository>(
 container.registerSingleton<ISpecificationsRepository>(
     "SpecificationsRepository",
     SpecificationsRepository
+);
+
+container.registerSingleton<IUsersRepository>(
+    "UsersRepository",
+    UsersReposotory
 );
 
