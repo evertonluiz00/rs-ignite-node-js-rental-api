@@ -20,14 +20,16 @@ export async function ensureAuthenticated(request: Request, response: Response, 
     try {
 
         const { sub: user_id } = verify(token, "MinhaChaveSecretaParaToken") as IPayload;
-        next();
-
         const usersRepository = new UsersRepository();
         const user = usersRepository.findById(user_id);
 
         if (!user) {
             throw new AppError("User does not exist!", 401);
         }
+
+        request.user = { id: user_id };
+
+        next();
 
     } catch (e: any) {
 
