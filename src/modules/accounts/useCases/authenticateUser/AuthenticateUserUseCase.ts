@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { IUsersRepository } from "../../interfaces/IUsersRepository";
+import { AppError } from "../../../../errors/AppError";
 
 interface IRequest {
     email: string;
@@ -32,13 +33,13 @@ class AuthenticateUserUseCase {
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user) {
-            throw new Error("Email or password invalid!");
+            throw new AppError("Email or password invalid!");
         }
 
         const passwordMatch = await compare(password, user.password);
 
         if (!passwordMatch) {
-            throw new Error("Email or password invalid!");
+            throw new AppError("Email or password invalid!");
         }
 
         const token = sign({}, "MinhaChaveSecretaParaToken", { subject: user.id, expiresIn: "1d" });
@@ -52,7 +53,6 @@ class AuthenticateUserUseCase {
         };
 
         return tokenReturn;
-
     }
 }
 

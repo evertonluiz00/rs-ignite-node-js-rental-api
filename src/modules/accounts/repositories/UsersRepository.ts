@@ -4,7 +4,7 @@ import { ICreateUserDTO } from '../dtos/ICreateUserDto';
 import { User } from "../models/User";
 
 
-class UsersReposotory implements IUsersRepository {
+class UsersRepository implements IUsersRepository {
 
     private repository: Repository<User>;
 
@@ -32,6 +32,12 @@ class UsersReposotory implements IUsersRepository {
         return user || null;
     }
 
+
+    public async findById(id: string): Promise<User | null> {
+        const user = await this.repository.findOne(id);
+        return user || null;
+    }
+
 }
 
-export { UsersReposotory }
+export { UsersRepository }

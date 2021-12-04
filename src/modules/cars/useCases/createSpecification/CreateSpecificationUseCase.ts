@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import { Specification } from "../../models/Specification";
 import { ISpecificationsRepository } from "../../interfaces/ISpecificationsRepository";
+import { AppError } from '../../../../errors/AppError';
 
 interface RequestDTO {
     name: string;
@@ -21,7 +22,7 @@ class CreateSpecificationUseCase {
         const specificationAlreadyExists = await this.specificationsRepository.findByName(name);
 
         if (specificationAlreadyExists) {
-            throw new Error("Specification already exists!");
+            throw new AppError("Specification already exists!");
         }
 
         const specification = this.specificationsRepository.create({ name, description });
